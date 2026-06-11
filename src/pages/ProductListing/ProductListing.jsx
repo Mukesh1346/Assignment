@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar/Navbar";
 import Filters from "../../components/Filters/Filters";
 import axios from 'axios';
 import Pagination from "../../components/Pagination/Pagination"
@@ -7,26 +6,26 @@ import { useProductContext } from '../../context/ProductContext'
 import { useNavigate } from 'react-router-dom';
 import "./ProductListing.css";
 
-const ProductListing = () => {
-  const [showSidebar, setShowSidebar] = useState(true);
+const ProductListing = ({showSidebar,}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   const [categories, setCategories] = useState([]);
 
-  const {
-    selectedCategory,
-    setSelectedCategory,
-    minPrice,
-    setMinPrice,
-    maxPrice,
-    setMaxPrice,
-    selectedBrands,
-    setSelectedBrands,
-  } = useProductContext();
-
+ const {
+  selectedCategory,
+  setSelectedCategory,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  selectedBrands,
+  setSelectedBrands,
+  searchTerm,
+  setSearchTerm,
+} = useProductContext();
 
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,13 +69,7 @@ const ProductListing = () => {
 
 
 
-  // const brands = [
-  //   ...new Set(
-  //     products
-  //       .map((product) => product.brand)
-  //       .filter(Boolean)
-  //   ),
-  // ];
+
 
   const filteredProducts = products.filter((product) => {
     const searchMatch =
@@ -113,15 +106,15 @@ const ProductListing = () => {
 
 
 
- useEffect(() => {
-  setCurrentPage(1);
-}, [
-  selectedCategory,
-  minPrice,
-  maxPrice,
-  selectedBrands,
-  searchTerm
-]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    selectedCategory,
+    minPrice,
+    maxPrice,
+    selectedBrands,
+    searchTerm
+  ]);
 
   const lastProductIndex = currentPage * productsPerPage;
   const firstProductIndex = lastProductIndex - productsPerPage;
@@ -165,11 +158,11 @@ const ProductListing = () => {
   );
 
 
-  
+
 
   return (
     <>
-      <Navbar setShowSidebar={setShowSidebar} />
+      {/* <Navbar setShowSidebar={setShowSidebar} /> */}
 
       <div className="container-fluid">
         <div className="row">

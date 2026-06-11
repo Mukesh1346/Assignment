@@ -13,6 +13,9 @@ export const ProductProvider = ({ children }) => {
   const [selectedBrands, setSelectedBrands] =
     useState([]);
 
+  const [searchTerm, setSearchTerm] =
+    useState("");
+
   return (
     <ProductContext.Provider
       value={{
@@ -24,6 +27,8 @@ export const ProductProvider = ({ children }) => {
         setMaxPrice,
         selectedBrands,
         setSelectedBrands,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}
