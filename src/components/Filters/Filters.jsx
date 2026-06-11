@@ -11,8 +11,9 @@ const Filters = ({
   brands,
   selectedBrands,
   setSelectedBrands,
+  searchTerm,
+  setSearchTerm,
 }) => {
-
 
   const handleBrandChange = (brand) => {
     if (selectedBrands.includes(brand)) {
@@ -36,6 +37,17 @@ const Filters = ({
 
 
 
+ const handleClearFilters = () => {
+  setSelectedCategory("");
+  setMinPrice("");
+  setMaxPrice("");
+  setSelectedBrands([]);
+  setSearchTerm("");
+};
+
+
+
+
   return (
     <div className="filters-container">
 
@@ -43,7 +55,9 @@ const Filters = ({
         <input
           type="text"
           className="form-control"
-          placeholder="🔍 Search..."
+          placeholder="🔍 Search Products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
@@ -117,12 +131,7 @@ const Filters = ({
         </div>
         <button
           className="btn btn-secondary w-100 mt-2"
-          onClick={() => {
-            setSelectedCategory("");
-            setMinPrice("");
-            setMaxPrice("");
-            setSelectedBrands([]);
-          }}
+          onClick={handleClearFilters}
         >
           Clear Filters
         </button>

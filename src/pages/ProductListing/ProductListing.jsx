@@ -3,6 +3,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import Filters from "../../components/Filters/Filters";
 import axios from 'axios';
 import Pagination from "../../components/Pagination/Pagination"
+import { useProductContext } from '../../context/ProductContext'
+import { useNavigate } from 'react-router-dom';
 import "./ProductListing.css";
 
 const ProductListing = () => {
@@ -10,14 +12,27 @@ const ProductListing = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [categories, setCategories] = useState([]);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [minPrice, setMinPrice] = useState("")
-  const [maxPrice, setMaxPrice] = useState("");
-  const [selectedBrands, setSelectedBrands] = useState([]);
+  // const [selectedCategory, setSelectedCategory] = useState("");
+  // const [minPrice, setMinPrice] = useState("")
+  // const [maxPrice, setMaxPrice] = useState("");
+  // const [selectedBrands, setSelectedBrands] = useState([]);
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    minPrice,
+    setMinPrice,
+    maxPrice,
+    setMaxPrice,
+    selectedBrands,
+    setSelectedBrands,
+  } = useProductContext();
 
+
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
   const productsPerPage = 12
@@ -67,43 +82,50 @@ const ProductListing = () => {
     ),
   ];
 
-  const filteredProducts = products.filter(
-    (product) => {
+  const filteredProducts = products.filter((product) => {
+    const searchMatch =
+      product.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      product.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      product.brand
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
-      const categoryMatch =
-        !selectedCategory ||
-        product.category === selectedCategory;
+    const categoryMatch =
+      !selectedCategory ||
+      product.category === selectedCategory;
 
-      const priceMatch =
-        (!minPrice ||
-          product.price >= Number(minPrice)) &&
-        (!maxPrice ||
-          product.price <= Number(maxPrice));
+    const priceMatch =
+      (!minPrice || product.price >= Number(minPrice)) &&
+      (!maxPrice || product.price <= Number(maxPrice));
 
-      const brandMatch =
-        selectedBrands.length === 0 ||
-        selectedBrands.includes(product.brand);
+    const brandMatch =
+      selectedBrands.length === 0 ||
+      selectedBrands.includes(product.brand);
 
-      return (
-        categoryMatch &&
-        priceMatch &&
-        brandMatch
-      );
-    }
-  );
+    return (
+      searchMatch &&
+      categoryMatch &&
+      priceMatch &&
+      brandMatch
+    );
+  });
 
 
 
 
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    selectedCategory,
-    minPrice,
-    maxPrice,
-    selectedBrands
-  ]);
+ useEffect(() => {
+  setCurrentPage(1);
+}, [
+  selectedCategory,
+  minPrice,
+  maxPrice,
+  selectedBrands,
+  searchTerm
+]);
 
   const lastProductIndex = currentPage * productsPerPage;
   const firstProductIndex = lastProductIndex - productsPerPage;
@@ -115,18 +137,18 @@ const ProductListing = () => {
 
 
 
-const filteredBrands = [
-  ...new Set(
-    products
-      .filter(
-        (product) =>
-          !selectedCategory ||
-          product.category === selectedCategory
-      )
-      .map((product) => product.brand)
-      .filter(Boolean)
-  ),
-];
+  const filteredBrands = [
+    ...new Set(
+      products
+        .filter(
+          (product) =>
+            !selectedCategory ||
+            product.category === selectedCategory
+        )
+        .map((product) => product.brand)
+        .filter(Boolean)
+    ),
+  ];
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -139,14 +161,15 @@ const filteredBrands = [
 
 
 
-console.log(selectedCategory);
-console.log(
-  products.filter(
-    (item) => item.category === selectedCategory
-  )
-);
+  console.log(selectedCategory);
+  console.log(
+    products.filter(
+      (item) => item.category === selectedCategory
+    )
+  );
 
 
+  
 
   return (
     <>
@@ -177,6 +200,8 @@ console.log(
               brands={filteredBrands}
               selectedBrands={selectedBrands}
               setSelectedBrands={setSelectedBrands}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
             />
           </div>
 
@@ -199,7 +224,12 @@ console.log(
                         : "col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4"
                     }
                   >
-                    <div className="product-card">
+                    <div
+                      className="product-card"
+                      onClick={() =>
+                        navigate(`/product/${product.id}`)
+                      }
+                    >
                       <div className="product-image-wrapper">
                         <img
                           src={product.images?.[0] || product.thumbnail}
@@ -221,13 +251,13 @@ console.log(
                         <p className="product-description">
                           {product.description}
                         </p>
-                         <div className="d-flex justify-content-center align-items-center"> 
+                        <div className="d-flex justify-content-center align-items-center">
                           <p className="text-warning m-0"> Price :  </p>
 
                           <p className="text-center fw-bold text-secondary m-0">
-                        {product.price}
-                        </p>
-                         </div>
+                            {product.price}
+                          </p>
+                        </div>
                         <div className="product-rating">
                           {[...Array(5)].map((_, index) => (
                             <span key={index}>
