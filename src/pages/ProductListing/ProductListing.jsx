@@ -95,6 +95,7 @@ const ProductListing = () => {
 
 
 
+
   useEffect(() => {
     setCurrentPage(1);
   }, [
@@ -114,7 +115,18 @@ const ProductListing = () => {
 
 
 
-
+const filteredBrands = [
+  ...new Set(
+    products
+      .filter(
+        (product) =>
+          !selectedCategory ||
+          product.category === selectedCategory
+      )
+      .map((product) => product.brand)
+      .filter(Boolean)
+  ),
+];
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -125,6 +137,14 @@ const ProductListing = () => {
   }
 
 
+
+
+console.log(selectedCategory);
+console.log(
+  products.filter(
+    (item) => item.category === selectedCategory
+  )
+);
 
 
 
@@ -154,7 +174,7 @@ const ProductListing = () => {
               setMinPrice={setMinPrice}
               maxPrice={maxPrice}
               setMaxPrice={setMaxPrice}
-              brands={brands}
+              brands={filteredBrands}
               selectedBrands={selectedBrands}
               setSelectedBrands={setSelectedBrands}
             />
@@ -162,7 +182,7 @@ const ProductListing = () => {
 
           {/* Product Section */}
           <div className={showSidebar ? "col-lg-10" : "col-lg-12"}>
-            <h3 className="mt-3">Products</h3>
+            <h3 className="mt-3 PageTitle">PRODUCTS</h3>
 
             {currentProducts.length === 0 ? (
               <div className="text-center py-5">
@@ -201,6 +221,13 @@ const ProductListing = () => {
                         <p className="product-description">
                           {product.description}
                         </p>
+                         <div className="d-flex justify-content-center align-items-center"> 
+                          <p className="text-warning m-0"> Price :  </p>
+
+                          <p className="text-center fw-bold text-secondary m-0">
+                        {product.price}
+                        </p>
+                         </div>
                         <div className="product-rating">
                           {[...Array(5)].map((_, index) => (
                             <span key={index}>

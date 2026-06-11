@@ -14,22 +14,25 @@ const Filters = ({
 }) => {
 
 
-const handleBrandChange = (brand) => {
-  if (selectedBrands.includes(brand)) {
-    setSelectedBrands(
-      selectedBrands.filter(
-        (item) => item !== brand
-      )
-    );
-  } else {
-    setSelectedBrands([
-      ...selectedBrands,
-      brand,
-    ]);
-  }
-};
+  const handleBrandChange = (brand) => {
+    if (selectedBrands.includes(brand)) {
+      setSelectedBrands(
+        selectedBrands.filter(
+          (item) => item !== brand
+        )
+      );
+    } else {
+      setSelectedBrands([
+        ...selectedBrands,
+        brand,
+      ]);
+    }
+  };
 
-
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    setSelectedBrands([]);
+  };
 
 
 
@@ -44,48 +47,48 @@ const handleBrandChange = (brand) => {
         />
       </div>
 
-     
 
-   {/* Categories */}
 
-<div className="filter-group">
-  <h6>Categories</h6>
+      {/* Categories */}
 
-  <div className="filter-scroll">
-    <label className="filter-option">
-      <input
-        type="radio"
-        name="category"
-        value=""
-        checked={selectedCategory === ""}
-        onChange={(e) =>
-          setSelectedCategory(e.target.value)
-        }
-      />
-      All Categories
-    </label>
+      <div className="filter-group">
+        <h6>Categories</h6>
 
-    {categories.map((category) => (
-      <label
-        key={category.slug}
-        className="filter-option"
-      >
-        <input
-          type="radio"
-          name="category"
-          value={category.slug}
-          checked={
-            selectedCategory === category.slug
-          }
-          onChange={(e) =>
-            setSelectedCategory(e.target.value)
-          }
-        />
-        {category.name}
-      </label>
-    ))}
-  </div>
-</div>
+        <div className="filter-scroll">
+          <label className="filter-option">
+            <input
+              type="radio"
+              name="category"
+              value=""
+              checked={selectedCategory === ""}
+              onChange={(e) =>
+                handleCategoryChange(e.target.value)
+              }
+            />
+            All Categories
+          </label>
+
+          {categories.map((category) => (
+            <label
+              key={category.slug}
+              className="filter-option"
+            >
+              <input
+                type="radio"
+                name="category"
+                value={category.slug}
+                checked={
+                  selectedCategory === category.slug
+                }
+                onChange={(e) =>
+                  handleCategoryChange(e.target.value)
+                }
+              />
+              {category.name}
+            </label>
+          ))}
+        </div>
+      </div>
       {/* Price */}
 
       <div className="filter-group">
@@ -93,66 +96,66 @@ const handleBrandChange = (brand) => {
 
         <div className="price-wrapper">
           <input
-  type="number"
-  className="form-control"
-  placeholder="Min"
-  value={minPrice}
-  onChange={(e) =>
-    setMinPrice(e.target.value)
-  }
-/>
-
-        <input
-  type="number"
-  className="form-control"
-  placeholder="Max"
-  value={maxPrice}
-  onChange={(e) =>
-    setMaxPrice(e.target.value)
-  }
-/>
-        </div>
-<button
-  className="btn btn-secondary w-100 mt-2"
-  onClick={() => {
-    setSelectedCategory("");
-    setMinPrice("");
-    setMaxPrice("");
-    setSelectedBrands([]);
-  }}
->
-  Clear Filters
-</button>
-      </div>
-
-      {/* Brands */}
-{/* Brands */}
-
-{selectedCategory && brands.length > 0 && (
-  <div className="filter-group">
-    <h6>Brands</h6>
-
-    <div className="filter-scroll">
-      {brands.map((brand) => (
-        <label
-          key={brand}
-          className="filter-option"
-        >
-          <input
-            type="checkbox"
-            checked={selectedBrands.includes(
-              brand
-            )}
-            onChange={() =>
-              handleBrandChange(brand)
+            type="number"
+            className="form-control"
+            placeholder="Min"
+            value={minPrice}
+            onChange={(e) =>
+              setMinPrice(e.target.value)
             }
           />
-          {brand}
-        </label>
-      ))}
-    </div>
-  </div>
-)}
+
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Max"
+            value={maxPrice}
+            onChange={(e) =>
+              setMaxPrice(e.target.value)
+            }
+          />
+        </div>
+        <button
+          className="btn btn-secondary w-100 mt-2"
+          onClick={() => {
+            setSelectedCategory("");
+            setMinPrice("");
+            setMaxPrice("");
+            setSelectedBrands([]);
+          }}
+        >
+          Clear Filters
+        </button>
+      </div>
+
+
+      {/* Brands */}
+
+      {brands.length > 0 && (
+        <div className="filter-group">
+          <h6>Brands</h6>
+
+          <div className="filter-scroll">
+            {brands.map((brand) => (
+              <label
+                key={brand}
+                className="filter-option"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedBrands.includes(
+                    brand
+                  )}
+                  onChange={() =>
+                    handleBrandChange(brand)
+                  }
+                />
+                {brand}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
