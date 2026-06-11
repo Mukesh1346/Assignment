@@ -70,13 +70,13 @@ const ProductListing = () => {
 
 
 
-  const brands = [
-    ...new Set(
-      products
-        .map((product) => product.brand)
-        .filter(Boolean)
-    ),
-  ];
+  // const brands = [
+  //   ...new Set(
+  //     products
+  //       .map((product) => product.brand)
+  //       .filter(Boolean)
+  //   ),
+  // ];
 
   const filteredProducts = products.filter((product) => {
     const searchMatch =

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useCallback} from "react";
 import "./details.css";
 import axios from "axios";
 import {
@@ -7,14 +7,6 @@ import {
 } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const handleOrder = () => {
-  Swal.fire({
-    title: "Order Placed!",
-    text: "Your order has been placed successfully.",
-    icon: "success",
-    confirmButtonText: "OK",
-  });
-};
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -32,29 +24,26 @@ export default function ProductDetailPage() {
   const [currentImage, setCurrentImage] =
     useState("");
 
-  const getProduct = async () => {
-    try {
-      setLoading(true);
+ const getProduct = useCallback(async () => {
+  try {
+    setLoading(true);
 
-      const res = await axios.get(
-        `https://dummyjson.com/products/${id}`
-      );
+    const res = await axios.get(
+      `https://dummyjson.com/products/${id}`
+    );
 
-      setProductItem(res.data);
+    setProductItem(res.data);
+    setCurrentImage(res.data.images?.[0]);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLoading(false);
+  }
+}, [id]);
 
-      setCurrentImage(
-        res.data.images?.[0]
-      );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getProduct();
-  }, [id]);
+ useEffect(() => {
+  getProduct();
+}, [getProduct]);
 
   const handleQuantityChange = (
     value
@@ -82,6 +71,14 @@ export default function ProductDetailPage() {
     );
   }
 
+const handleOrder = () => {
+  Swal.fire({
+    title: "Order Placed!",
+    text: "Your order has been placed successfully.",
+    icon: "success",
+    confirmButtonText: "OK",
+  });
+};
 
 
 
