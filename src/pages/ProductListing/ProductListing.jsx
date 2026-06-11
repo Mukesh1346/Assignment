@@ -24,7 +24,7 @@ const ProductListing = ({ showSidebar, }) => {
     selectedBrands,
     setSelectedBrands,
     navbarSearch,
-    setNavbarSearch,
+    // setNavbarSearch,
     sidebarSearch,
     setSidebarSearch,
   } = useProductContext();
