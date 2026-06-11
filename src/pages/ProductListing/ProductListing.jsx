@@ -263,7 +263,7 @@ useEffect(() => {
                         </div>
 
                         <button className="add-to-cart-btn">
-                          ADD TO CART
+                          VIEW DETAILS
                         </button>
                       </div>
                     </div>

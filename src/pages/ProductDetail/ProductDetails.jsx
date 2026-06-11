@@ -93,14 +93,14 @@ const handleOrder = () => {
         </button>
       </div>
 
-      <section className="pd-hero-section py-5">
+      <section className="pd-hero-section py-3">
         <div className="container">
           <div className="row g-4">
 
             {/* Product Images */}
 
             <div className="col-lg-6">
-              <div className="pd-image-container bg-white rounded-3 shadow-sm p-4 d-flex">
+              <div className="pd-image-container  rounded-3 shadow-sm p-4 d-flex">
 
                 <div className="pd-thumbnails d-flex flex-column align-items-center me-4">
 
