@@ -13,8 +13,13 @@ export const ProductProvider = ({ children }) => {
   const [selectedBrands, setSelectedBrands] =
     useState([]);
 
-  const [searchTerm, setSearchTerm] =
-    useState("");
+  // const [searchTerm, setSearchTerm] =
+  //   useState("");
+
+  const [navbarSearch, setNavbarSearch] = useState("");
+  const [sidebarSearch, setSidebarSearch] = useState("");
+
+
 
   return (
     <ProductContext.Provider
@@ -27,8 +32,10 @@ export const ProductProvider = ({ children }) => {
         setMaxPrice,
         selectedBrands,
         setSelectedBrands,
-        searchTerm,
-        setSearchTerm,
+        navbarSearch,
+        setNavbarSearch,
+        sidebarSearch,
+        setSidebarSearch,
       }}
     >
       {children}
