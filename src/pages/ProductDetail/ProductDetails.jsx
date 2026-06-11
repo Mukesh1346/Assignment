@@ -83,14 +83,6 @@ export default function ProductDetailPage() {
   }
 
 
-const handleOrder = () => {
-  Swal.fire({
-    title: "Order Placed!",
-    text: "Your order has been placed successfully.",
-    icon: "success",
-    confirmButtonText: "OK",
-  });
-};
 
 
   return (

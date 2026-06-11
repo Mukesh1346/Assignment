@@ -16,10 +16,6 @@ const ProductListing = () => {
 
   const [categories, setCategories] = useState([]);
 
-  // const [selectedCategory, setSelectedCategory] = useState("");
-  // const [minPrice, setMinPrice] = useState("")
-  // const [maxPrice, setMaxPrice] = useState("");
-  // const [selectedBrands, setSelectedBrands] = useState([]);
   const {
     selectedCategory,
     setSelectedCategory,
@@ -178,11 +174,11 @@ const ProductListing = () => {
       <div className="container-fluid">
         <div className="row">
 
-          {currentProducts.length === 0 && (
+          {/* {currentProducts.length === 0 && (
             <div className="text-center py-5">
               <h4>No Products Found</h4>
             </div>
-          )}
+          )} */}
 
           {/* Sidebar */}
           <div
