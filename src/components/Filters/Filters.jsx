@@ -44,44 +44,47 @@ const handleBrandChange = (brand) => {
         />
       </div>
 
-      {/* Categories */}
+     
 
-    <div className="filter-group">
+   {/* Categories */}
+
+<div className="filter-group">
   <h6>Categories</h6>
 
-  <label className="filter-option">
-    <input
-      type="radio"
-      name="category"
-      value=""
-      checked={selectedCategory === ""}
-      onChange={(e) =>
-        setSelectedCategory(e.target.value)
-      }
-    />
-    All Categories
-  </label>
-
-  {categories.map((category) => (
-    <label
-      key={category.slug}
-      className="filter-option"
-    >
+  <div className="filter-scroll">
+    <label className="filter-option">
       <input
         type="radio"
         name="category"
-        value={category.slug}
-        checked={
-          selectedCategory === category.slug
-        }
+        value=""
+        checked={selectedCategory === ""}
         onChange={(e) =>
           setSelectedCategory(e.target.value)
         }
       />
-
-      {category.name}
+      All Categories
     </label>
-  ))}
+
+    {categories.map((category) => (
+      <label
+        key={category.slug}
+        className="filter-option"
+      >
+        <input
+          type="radio"
+          name="category"
+          value={category.slug}
+          checked={
+            selectedCategory === category.slug
+          }
+          onChange={(e) =>
+            setSelectedCategory(e.target.value)
+          }
+        />
+        {category.name}
+      </label>
+    ))}
+  </div>
 </div>
       {/* Price */}
 
@@ -123,28 +126,33 @@ const handleBrandChange = (brand) => {
       </div>
 
       {/* Brands */}
+{/* Brands */}
 
-     <div className="filter-group">
-  <h6>Brands</h6>
+{selectedCategory && brands.length > 0 && (
+  <div className="filter-group">
+    <h6>Brands</h6>
 
-  {brands.map((brand) => (
-    <label
-      key={brand}
-      className="filter-option"
-    >
-      <input
-        type="checkbox"
-        checked={selectedBrands.includes(brand)}
-        onChange={() =>
-          handleBrandChange(brand)
-        }
-      />
-
-      {brand}
-    </label>
-  ))}
-</div>
-
+    <div className="filter-scroll">
+      {brands.map((brand) => (
+        <label
+          key={brand}
+          className="filter-option"
+        >
+          <input
+            type="checkbox"
+            checked={selectedBrands.includes(
+              brand
+            )}
+            onChange={() =>
+              handleBrandChange(brand)
+            }
+          />
+          {brand}
+        </label>
+      ))}
+    </div>
+  </div>
+)}
     </div>
   );
 };
