@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loader from "../../components/Loader/Loader";
 
 
 export default function ProductDetailPage() {
@@ -62,7 +63,7 @@ export default function ProductDetailPage() {
   };
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return  <Loader/>
   }
 
   if (!productItem) {

@@ -15,19 +15,9 @@ function App() {
       />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProductListing
-              showSidebar={showSidebar}
-            />
-          }
-        />
+        <Route path="/" element={<ProductListing showSidebar={showSidebar}/> }/>
 
-        <Route
-          path="/product/:id"
-          element={<ProductDetail />}
-        />
+        <Route path="/product/:id" element={<ProductDetail />} />
 
       </Routes>
 

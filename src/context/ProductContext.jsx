@@ -13,8 +13,6 @@ export const ProductProvider = ({ children }) => {
   const [selectedBrands, setSelectedBrands] =
     useState([]);
 
-  // const [searchTerm, setSearchTerm] =
-  //   useState("");
 
   const [navbarSearch, setNavbarSearch] = useState("");
   const [sidebarSearch, setSidebarSearch] = useState("");

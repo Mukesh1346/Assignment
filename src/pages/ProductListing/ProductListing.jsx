@@ -5,6 +5,7 @@ import Pagination from "../../components/Pagination/Pagination"
 import { useProductContext } from '../../context/ProductContext'
 import { useNavigate } from 'react-router-dom';
 import "./ProductListing.css";
+import Loader from "../../components/Loader/Loader";
 
 const ProductListing = ({ showSidebar, }) => {
   const [products, setProducts] = useState([]);
@@ -143,7 +144,7 @@ useEffect(() => {
   ];
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <Loader/>
   }
 
   if (error) {
